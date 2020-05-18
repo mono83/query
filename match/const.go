@@ -8,7 +8,9 @@ import (
 const (
 	Unknown Type = 0
 
+	IsNil     Type = 1 // Alias
 	IsNull    Type = 1
+	NotIsNil  Type = 2 // Alias
 	NotIsNull Type = 2
 
 	Eq        Type = 3 // Alias
