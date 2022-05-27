@@ -12,6 +12,8 @@ const (
 	IsNull    Type = 1
 	NotIsNil  Type = 2 // Alias
 	NotIsNull Type = 2
+	IsNotNull Type = 2 // Alias
+	IsNotNil  Type = 2 // Alias
 
 	Eq        Type = 3 // Alias
 	Equals    Type = 3
