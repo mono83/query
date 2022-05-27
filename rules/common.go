@@ -24,7 +24,7 @@ func Eq(left, right interface{}) query.Rule {
 func MatchID64(id ...int64) query.Rule {
 	switch len(id) {
 	case 0:
-		return False{}
+		return False
 	case 1:
 		return Eq("id", id[0])
 	default:

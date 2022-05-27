@@ -15,7 +15,7 @@ var ruleToSQLDataProvider = []struct {
 	Placeholders []interface{}
 	Rule         query.Rule
 }{
-	{"1=0", nil, rules.False{}},
+	{"1=0", nil, rules.False},
 	{"`foo` IS NULL", nil, rules.New(query.String("foo"), match.IsNull, nil)},
 	{"`bar` IS NULL", nil, rules.IsNull(query.String("bar"))},
 	{"`bar` NOT IS NULL", nil, rules.New(query.String("bar"), match.NotIsNull, nil)},

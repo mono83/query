@@ -10,9 +10,9 @@ func (e Evaluator) Rule(r query.Rule) bool {
 	if r == nil {
 		return false
 	}
-	op := r.GetType()
-	left := r.GetLeft()
-	right := r.GetRight()
+	op := r.Type()
+	left := r.Left()
+	right := r.Right()
 
 	if op == match.Unknown || op.IsCustom() {
 		// Unknown or custom operator

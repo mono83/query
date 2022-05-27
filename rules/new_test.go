@@ -9,9 +9,9 @@ import (
 
 func TestNewFull(t *testing.T) {
 	r := New("foo", match.Neq, "bar")
-	assert.Equal(t, "foo", r.GetLeft())
-	assert.Equal(t, "bar", r.GetRight())
-	assert.Equal(t, match.Neq, r.GetType())
+	assert.Equal(t, "foo", r.Left())
+	assert.Equal(t, "bar", r.Right())
+	assert.Equal(t, match.Neq, r.Type())
 	if x, ok := r.(full); assert.True(t, ok) {
 		assert.Equal(t, "{Rule {foo (string)} Not_Equal {bar (string)}}", x.String())
 	}
@@ -19,9 +19,9 @@ func TestNewFull(t *testing.T) {
 
 func TestNewLeftPartial(t *testing.T) {
 	r := New("xyz", match.IsNotNil, nil)
-	assert.Equal(t, "xyz", r.GetLeft())
-	assert.Nil(t, r.GetRight())
-	assert.Equal(t, match.IsNotNil, r.GetType())
+	assert.Equal(t, "xyz", r.Left())
+	assert.Nil(t, r.Right())
+	assert.Equal(t, match.IsNotNil, r.Type())
 	if x, ok := r.(leftPart); assert.True(t, ok) {
 		assert.Equal(t, "{Rule {xyz (string)} Is_Not_Null}}", x.String())
 	}

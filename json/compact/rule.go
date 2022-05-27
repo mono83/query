@@ -15,9 +15,9 @@ func mapRule(src query.Rule) (response rule) {
 		return x
 	}
 	if src != nil {
-		response.l = src.GetLeft()
-		response.r = src.GetRight()
-		response.t = src.GetType()
+		response.l = src.Left()
+		response.r = src.Right()
+		response.t = src.Type()
 	}
 	return
 }
@@ -27,9 +27,9 @@ type rule struct {
 	t    match.Type
 }
 
-func (r rule) GetLeft() interface{}  { return r.l }
-func (r rule) GetRight() interface{} { return r.r }
-func (r rule) GetType() match.Type   { return r.t }
+func (r rule) Left() interface{}  { return r.l }
+func (r rule) Right() interface{} { return r.r }
+func (r rule) Type() match.Type   { return r.t }
 
 func (r rule) MarshalJSON() ([]byte, error) {
 	if r.t.IsCustom() {

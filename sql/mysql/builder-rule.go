@@ -13,33 +13,32 @@ func (s *StatementBuilder) WriteRule(rule query.Rule) error {
 	if rule == nil {
 		return errors.New("nil rule")
 	}
-	if _, ok := rule.(rules.False); ok {
+	if rule == rules.False {
 		s.buf.WriteString("1=0")
 		return nil
 	}
-	if !rule.GetType().IsStandard() {
+	if !rule.Type().IsStandard() {
 		return errors.New(
 			"not standard rule operation type provided. Use mapping to convert into standard",
 		)
 	}
 
-	left := rule.GetLeft()
-	right := rule.GetRight()
+	left, right := rule.Left(), rule.Right()
 
-	switch rule.GetType() {
+	switch rule.Type() {
 	case match.IsNull, match.NotIsNull:
-		return s.ruleToSQLNulls(left, rule.GetType())
+		return s.ruleToSQLNulls(left, rule.Type())
 	case match.Equals,
 		match.NotEquals,
 		match.GreaterThan,
 		match.LowerThan,
 		match.GreaterThanEquals,
 		match.LowerThanEquals:
-		return s.ruleToSQLSimpleOps(left, right, rule.GetType())
+		return s.ruleToSQLSimpleOps(left, right, rule.Type())
 	case match.In, match.NotIn:
-		return s.ruleToSQLIN(left, right, rule.GetType())
+		return s.ruleToSQLIN(left, right, rule.Type())
 	default:
-		return UnsupportedOperation(rule.GetType())
+		return UnsupportedOperation(rule.Type())
 	}
 }
 

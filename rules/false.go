@@ -1,15 +1,20 @@
 package rules
 
-import "github.com/mono83/query/match"
+import (
+	"github.com/mono83/query"
+	"github.com/mono83/query/match"
+)
+
+var False query.Rule = falseRule{}
 
 // False is special rule instance, that is always false
-type False struct{}
+type falseRule struct{}
 
 // GetLeft is query.Rule interface implementation
-func (False) GetLeft() interface{} { return 1 }
+func (falseRule) Left() interface{} { return 1 }
 
 // GetRight is query.Rule interface implementation
-func (False) GetRight() interface{} { return 2 }
+func (falseRule) Right() interface{} { return 2 }
 
 // GetType is query.Rule interface implementation
-func (False) GetType() match.Type { return match.Eq }
+func (falseRule) Type() match.Type { return match.Eq }

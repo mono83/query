@@ -20,9 +20,9 @@ type full struct {
 	t    match.Type
 }
 
-func (f full) GetLeft() interface{}  { return f.l }
-func (f full) GetRight() interface{} { return f.r }
-func (f full) GetType() match.Type   { return f.t }
+func (f full) Left() interface{}  { return f.l }
+func (f full) Right() interface{} { return f.r }
+func (f full) Type() match.Type   { return f.t }
 func (f full) String() string {
 	return fmt.Sprintf(`{Rule {%v (%T)} %s {%v (%T)}}`, f.l, f.l, f.t.String(), f.r, f.r)
 }
@@ -32,9 +32,9 @@ type leftPart struct {
 	t match.Type
 }
 
-func (l leftPart) GetLeft() interface{} { return l.l }
-func (leftPart) GetRight() interface{}  { return nil }
-func (l leftPart) GetType() match.Type  { return l.t }
+func (l leftPart) Left() interface{} { return l.l }
+func (leftPart) Right() interface{}  { return nil }
+func (l leftPart) Type() match.Type  { return l.t }
 func (l leftPart) String() string {
 	return fmt.Sprintf(`{Rule {%v (%T)} %s}}`, l.l, l.l, l.t.String())
 }
