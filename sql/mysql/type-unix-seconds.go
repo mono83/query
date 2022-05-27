@@ -13,20 +13,20 @@ type UnixTimestamp struct {
 
 // Scan is sql.Scanner interface implementation
 func (u *UnixTimestamp) Scan(src interface{}) error {
-	switch src.(type) {
+	switch x := src.(type) {
 	case []byte:
-		return u.Scan(string(src.([]byte)))
+		return u.Scan(string(x))
 	case int64:
-		u.Time = time.Unix(src.(int64), 0).UTC()
+		u.Time = time.Unix(x, 0).UTC()
 		return nil
 	case uint64:
-		u.Time = time.Unix(int64(src.(uint64)), 0).UTC()
+		u.Time = time.Unix(int64(x), 0).UTC()
 		return nil
 	case int:
-		u.Time = time.Unix(int64(src.(int)), 0).UTC()
+		u.Time = time.Unix(int64(x), 0).UTC()
 		return nil
 	case string:
-		ui, err := strconv.ParseInt(src.(string), 10, 64)
+		ui, err := strconv.ParseInt(x, 10, 64)
 		if err == nil {
 			return u.Scan(ui)
 		}
