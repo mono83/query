@@ -7,17 +7,17 @@ import (
 
 // IsNull returns rule with IS NULL matcher for provided field
 func IsNull(field interface{}) query.Rule {
-	return query.CommonRule{Left: field, Type: match.IsNull}
+	return New(field, match.IsNull, nil)
 }
 
 // IsNotNull returns rule with IS NOT NULL matcher for provided field
 func IsNotNull(field interface{}) query.Rule {
-	return query.CommonRule{Left: field, Type: match.NotIsNull}
+	return New(field, match.IsNotNull, nil)
 }
 
 // Eq returns rule built with EQUALS matcher
 func Eq(left, right interface{}) query.Rule {
-	return query.CommonRule{Left: left, Right: right, Type: match.Equals}
+	return New(left, match.Equals, right)
 }
 
 // MatchID64 returns rule for matching IDs
@@ -28,6 +28,6 @@ func MatchID64(id ...int64) query.Rule {
 	case 1:
 		return Eq("id", id[0])
 	default:
-		return query.CommonRule{Left: "id", Right: id, Type: match.In}
+		return New("id", match.In, id)
 	}
 }
