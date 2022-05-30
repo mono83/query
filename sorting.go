@@ -4,7 +4,7 @@ package query
 type Sorting interface {
 	Named
 
-	GetType() SortOrder
+	Type() SortOrder
 }
 
 // SortOrder specifies collection ordering

@@ -7,6 +7,7 @@ import (
 	"github.com/mono83/query"
 	"github.com/mono83/query/names"
 	"github.com/mono83/query/rules"
+	"github.com/mono83/query/sorting"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,7 +27,7 @@ var filterToSQLDataProvider = []struct {
 		query.CommonFilter{
 			Type:    query.And,
 			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
-			Sorting: []query.Sorting{query.SimpleAsc("id")},
+			Sorting: []query.Sorting{sorting.Asc("id")},
 		},
 	},
 	{
@@ -34,7 +35,7 @@ var filterToSQLDataProvider = []struct {
 		query.CommonFilter{
 			Type:    query.And,
 			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
-			Sorting: []query.Sorting{query.SimpleAsc("id"), query.SimpleDesc("name")},
+			Sorting: []query.Sorting{sorting.Asc("id"), sorting.Desc("name")},
 		},
 	},
 	{
@@ -42,7 +43,7 @@ var filterToSQLDataProvider = []struct {
 		query.CommonFilter{
 			Type:    query.And,
 			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
-			Sorting: []query.Sorting{query.SimpleAsc("id")},
+			Sorting: []query.Sorting{sorting.Asc("id")},
 			Limit:   3,
 		},
 	},

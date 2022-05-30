@@ -23,9 +23,9 @@ func (s *StatementBuilder) WriteFilter(f query.Filter) error {
 			}
 			s.WriteNamed(sort)
 			s.buf.WriteRune(' ')
-			if sort.GetType() == query.Desc {
+			if sort.Type() == query.Desc {
 				s.buf.WriteString("DESC")
-			} else if sort.GetType() == query.Asc {
+			} else if sort.Type() == query.Asc {
 				s.buf.WriteString("ASC")
 			} else {
 				return errors.New("unknown sort type")
