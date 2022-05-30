@@ -4,7 +4,9 @@ import "github.com/mono83/query"
 
 // New builds and returns new condition
 func New(logic query.Logic, rules []query.Rule, conditions []query.Condition) query.Condition {
-	if logic == query.And && len(conditions) == 0 {
+	if len(conditions) == 0 && len(rules) == 0 {
+		return empty(logic)
+	} else if logic == query.And && len(conditions) == 0 {
 		return commonCondition(rules)
 	}
 	return condition{
@@ -40,3 +42,9 @@ type commonCondition []query.Rule
 func (c commonCondition) Type() query.Logic             { return query.And }
 func (c commonCondition) Rules() []query.Rule           { return []query.Rule(c) }
 func (c commonCondition) Conditions() []query.Condition { return nil }
+
+type empty query.Logic
+
+func (e empty) Type() query.Logic           { return query.Logic(e) }
+func (empty) Rules() []query.Rule           { return nil }
+func (empty) Conditions() []query.Condition { return nil }
