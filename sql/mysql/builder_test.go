@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/mono83/query"
+	"github.com/mono83/query/names"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -30,10 +31,10 @@ var namedsDataProvider = []struct {
 	ExpectedSorting string
 	Source          query.Named
 }{
-	{"`foo`", "`foo`", "`foo`", query.String("foo")},
-	{"`foo`", "`foo`", "`foo`", query.String("`foo`")},
-	{"`bar` as `zzz`", "`bar`", "`bar`", query.AliasedName{Name: "bar", Alias: "zzz"}},
-	{"`bar` as `zzz`", "`bar`", "`bar`", query.AliasedName{Name: "`bar`", Alias: "`zzz`"}},
+	{"`foo`", "`foo`", "`foo`", names.String("foo")},
+	{"`foo`", "`foo`", "`foo`", names.String("`foo`")},
+	{"`bar` as `zzz`", "`bar`", "`bar`", names.Alias("bar", "zzz")},
+	{"`bar` as `zzz`", "`bar`", "`bar`", names.Alias("`bar`", "`zzz`")},
 }
 
 func TestWriteNameds(t *testing.T) {

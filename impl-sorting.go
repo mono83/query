@@ -10,13 +10,13 @@ type CommonSorting struct {
 func (c CommonSorting) GetType() SortOrder { return c.Type }
 
 // GetName returns column name, used in ordering
-func (c CommonSorting) GetName() string { return c.Column.GetName() }
+func (c CommonSorting) Name() string { return c.Column.Name() }
 
 // SimpleAsc is ASC-only Sorting implementation
 type SimpleAsc string
 
 // GetName returns column name, used in ordering
-func (s SimpleAsc) GetName() string { return string(s) }
+func (s SimpleAsc) Name() string { return string(s) }
 
 // GetType always returns ASC
 func (s SimpleAsc) GetType() SortOrder { return Asc }
@@ -28,7 +28,7 @@ func (s SimpleAsc) GetColumn() Named { return s }
 type SimpleDesc string
 
 // GetName returns column name, used in ordering
-func (s SimpleDesc) GetName() string { return string(s) }
+func (s SimpleDesc) Name() string { return string(s) }
 
 // GetType always returns DESC
 func (s SimpleDesc) GetType() SortOrder { return Desc }

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/mono83/query"
+	"github.com/mono83/query/names"
 	"github.com/mono83/query/rules"
 	"github.com/stretchr/testify/assert"
 )
@@ -14,17 +15,17 @@ var filterToSQLDataProvider = []struct {
 	Filter query.Filter
 }{
 	// No sorting
-	{"`id` NOT IS NULL", query.CommonFilter{Type: query.And, Rules: []query.Rule{rules.IsNotNull(query.String("id"))}}},
-	{"`id` NOT IS NULL LIMIT 5", query.CommonFilter{Type: query.And, Limit: 5, Rules: []query.Rule{rules.IsNotNull(query.String("id"))}}},
-	{"`id` NOT IS NULL", query.CommonFilter{Type: query.And, Offset: 5, Rules: []query.Rule{rules.IsNotNull(query.String("id"))}}},
-	{"`id` NOT IS NULL LIMIT 5,2", query.CommonFilter{Type: query.And, Offset: 5, Limit: 2, Rules: []query.Rule{rules.IsNotNull(query.String("id"))}}},
+	{"`id` NOT IS NULL", query.CommonFilter{Type: query.And, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
+	{"`id` NOT IS NULL LIMIT 5", query.CommonFilter{Type: query.And, Limit: 5, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
+	{"`id` NOT IS NULL", query.CommonFilter{Type: query.And, Offset: 5, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
+	{"`id` NOT IS NULL LIMIT 5,2", query.CommonFilter{Type: query.And, Offset: 5, Limit: 2, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
 
 	// With sorting
 	{
 		"`id` NOT IS NULL ORDER BY `id` ASC",
 		query.CommonFilter{
 			Type:    query.And,
-			Rules:   []query.Rule{rules.IsNotNull(query.String("id"))},
+			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
 			Sorting: []query.Sorting{query.SimpleAsc("id")},
 		},
 	},
@@ -32,7 +33,7 @@ var filterToSQLDataProvider = []struct {
 		"`id` NOT IS NULL ORDER BY `id` ASC,`name` DESC",
 		query.CommonFilter{
 			Type:    query.And,
-			Rules:   []query.Rule{rules.IsNotNull(query.String("id"))},
+			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
 			Sorting: []query.Sorting{query.SimpleAsc("id"), query.SimpleDesc("name")},
 		},
 	},
@@ -40,7 +41,7 @@ var filterToSQLDataProvider = []struct {
 		"`id` NOT IS NULL ORDER BY `id` ASC LIMIT 3",
 		query.CommonFilter{
 			Type:    query.And,
-			Rules:   []query.Rule{rules.IsNotNull(query.String("id"))},
+			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
 			Sorting: []query.Sorting{query.SimpleAsc("id")},
 			Limit:   3,
 		},

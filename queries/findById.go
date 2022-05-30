@@ -2,6 +2,7 @@ package queries
 
 import (
 	"github.com/mono83/query"
+	"github.com/mono83/query/names"
 	"github.com/mono83/query/rules"
 )
 
@@ -24,5 +25,5 @@ func (id64SimpleQuery) GetConditions() []query.Condition { return nil }
 func (id64SimpleQuery) GetSorting() []query.Sorting      { return nil }
 func (id64SimpleQuery) GetLimit() int                    { return 0 }
 func (id64SimpleQuery) GetOffset() int                   { return 0 }
-func (i id64SimpleQuery) GetSchema() query.Named         { return query.String(i.table) }
+func (i id64SimpleQuery) GetSchema() query.Named         { return names.String(i.table) }
 func (i id64SimpleQuery) GetRules() []query.Rule         { return []query.Rule{rules.MatchID64(i.ids...)} }

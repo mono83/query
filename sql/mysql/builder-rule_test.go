@@ -6,6 +6,7 @@ import (
 
 	"github.com/mono83/query"
 	"github.com/mono83/query/match"
+	"github.com/mono83/query/names"
 	"github.com/mono83/query/rules"
 	"github.com/stretchr/testify/assert"
 )
@@ -16,21 +17,21 @@ var ruleToSQLDataProvider = []struct {
 	Rule         query.Rule
 }{
 	{"1=0", nil, rules.False},
-	{"`foo` IS NULL", nil, rules.New(query.String("foo"), match.IsNull, nil)},
-	{"`bar` IS NULL", nil, rules.IsNull(query.String("bar"))},
-	{"`bar` NOT IS NULL", nil, rules.New(query.String("bar"), match.NotIsNull, nil)},
-	{"`foo` = `bar`", nil, rules.New(query.String("foo"), match.Equals, query.String("bar"))},
-	{"`foo` <> `bar`", nil, rules.New(query.String("foo"), match.NotEquals, query.String("bar"))},
-	{"`foo` = ?", []interface{}{5}, rules.New(query.String("foo"), match.Equals, 5)},
-	{"`baz` = ?", []interface{}{3}, rules.Eq(query.String("baz"), 3)},
-	{"`foo` <> ?", []interface{}{"bar"}, rules.New(query.String("foo"), match.NotEquals, "bar")},
-	{"`foo` > ?", []interface{}{"7"}, rules.New(query.String("foo"), match.Gt, "7")},
-	{"`foo` >= ?", []interface{}{7}, rules.New(query.String("foo"), match.Gte, 7)},
-	{"`foo` < ?", []interface{}{"7"}, rules.New(query.String("foo"), match.Lt, "7")},
-	{"`foo` <= ?", []interface{}{"7"}, rules.New(query.String("foo"), match.Lte, "7")},
-	{"`bar` IN (?,?,?)", []interface{}{5, int64(6), 7}, rules.New(query.String("bar"), match.In, []interface{}{5, int64(6), 7})},
-	{"`bar` NOT IN (?,?)", []interface{}{3, "false"}, rules.New(query.String("bar"), match.NotIn, []interface{}{3, "false"})},
-	{"`bar` IN (?)", []interface{}{true}, rules.New(query.String("bar"), match.In, []interface{}{true})},
+	{"`foo` IS NULL", nil, rules.New(names.String("foo"), match.IsNull, nil)},
+	{"`bar` IS NULL", nil, rules.IsNull(names.String("bar"))},
+	{"`bar` NOT IS NULL", nil, rules.New(names.String("bar"), match.NotIsNull, nil)},
+	{"`foo` = `bar`", nil, rules.New(names.String("foo"), match.Equals, names.String("bar"))},
+	{"`foo` <> `bar`", nil, rules.New(names.String("foo"), match.NotEquals, names.String("bar"))},
+	{"`foo` = ?", []interface{}{5}, rules.New(names.String("foo"), match.Equals, 5)},
+	{"`baz` = ?", []interface{}{3}, rules.Eq(names.String("baz"), 3)},
+	{"`foo` <> ?", []interface{}{"bar"}, rules.New(names.String("foo"), match.NotEquals, "bar")},
+	{"`foo` > ?", []interface{}{"7"}, rules.New(names.String("foo"), match.Gt, "7")},
+	{"`foo` >= ?", []interface{}{7}, rules.New(names.String("foo"), match.Gte, 7)},
+	{"`foo` < ?", []interface{}{"7"}, rules.New(names.String("foo"), match.Lt, "7")},
+	{"`foo` <= ?", []interface{}{"7"}, rules.New(names.String("foo"), match.Lte, "7")},
+	{"`bar` IN (?,?,?)", []interface{}{5, int64(6), 7}, rules.New(names.String("bar"), match.In, []interface{}{5, int64(6), 7})},
+	{"`bar` NOT IN (?,?)", []interface{}{3, "false"}, rules.New(names.String("bar"), match.NotIn, []interface{}{3, "false"})},
+	{"`bar` IN (?)", []interface{}{true}, rules.New(names.String("bar"), match.In, []interface{}{true})},
 }
 
 func TestRuleToSQL(t *testing.T) {

@@ -7,6 +7,7 @@ import (
 	"github.com/mono83/query"
 	"github.com/mono83/query/conditions"
 	"github.com/mono83/query/match"
+	"github.com/mono83/query/names"
 	"github.com/mono83/query/rules"
 	"github.com/stretchr/testify/assert"
 )
@@ -16,21 +17,21 @@ var conditionToSQLDataProvider = []struct {
 	Placeholders []interface{}
 	Condition    query.Condition
 }{
-	{"`name` = ?", []interface{}{"bar"}, conditions.ForAllRules(rules.Eq(query.String("name"), "bar"))},
+	{"`name` = ?", []interface{}{"bar"}, conditions.ForAllRules(rules.Eq(names.String("name"), "bar"))},
 	{
 		"(`id` > ? AND `name` = ?)",
 		[]interface{}{10, "bar"},
 		conditions.ForAllRules(
-			rules.New(query.String("id"), match.GreaterThan, 10),
-			rules.Eq(query.String("name"), "bar"),
+			rules.New(names.String("id"), match.GreaterThan, 10),
+			rules.Eq(names.String("name"), "bar"),
 		),
 	},
 	{
 		"(`id` <= ? OR `name` = ?)",
 		[]interface{}{3, "bar"},
 		conditions.ForAnyRule(
-			rules.New(query.String("id"), match.LesserThanEquals, 3),
-			rules.Eq(query.String("name"), "bar"),
+			rules.New(names.String("id"), match.LesserThanEquals, 3),
+			rules.Eq(names.String("name"), "bar"),
 		),
 	},
 	{
@@ -38,15 +39,15 @@ var conditionToSQLDataProvider = []struct {
 		[]interface{}{"admin", "current", "user"},
 		conditions.New(
 			query.Or,
-			[]query.Rule{rules.Eq(query.String("type"), "admin")},
+			[]query.Rule{rules.Eq(names.String("type"), "admin")},
 			[]query.Condition{
 				conditions.ForAnyRule(
-					rules.Eq(query.String("lastLoginAt"), query.String("firstLoginAt")),
-					rules.IsNull(query.String("blockedAt")),
+					rules.Eq(names.String("lastLoginAt"), names.String("firstLoginAt")),
+					rules.IsNull(names.String("blockedAt")),
 				),
 				conditions.ForAllRules(
-					rules.Eq(query.String("scope"), "current"),
-					rules.Eq(query.String("type"), "user"),
+					rules.Eq(names.String("scope"), "current"),
+					rules.Eq(names.String("type"), "user"),
 				),
 			},
 		),

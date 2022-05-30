@@ -50,7 +50,7 @@ func (s *StatementBuilder) WriteKey(key string) *StatementBuilder {
 // WriteNamed writes named entity
 func (s *StatementBuilder) WriteNamed(n query.Named) *StatementBuilder {
 	if n != nil {
-		s.WriteKey(n.GetName())
+		s.WriteKey(n.Name())
 	}
 
 	return s
@@ -59,11 +59,11 @@ func (s *StatementBuilder) WriteNamed(n query.Named) *StatementBuilder {
 // WriteColumn writes column name, aliases are supported
 func (s *StatementBuilder) WriteColumn(n query.Named) error {
 	if n != nil {
-		s.WriteKey(n.GetName())
+		s.WriteKey(n.Name())
 
 		if a, ok := n.(query.Aliased); ok {
 			s.buf.WriteString(" as ")
-			s.WriteKey(a.GetAlias())
+			s.WriteKey(a.Alias())
 		}
 	} else {
 		return errors.New("nil provided instead column")
@@ -75,7 +75,7 @@ func (s *StatementBuilder) WriteColumn(n query.Named) error {
 // WriteSchema writes schema (table) name, aliases not supported
 func (s *StatementBuilder) WriteSchema(n query.Named) error {
 	if n != nil {
-		s.WriteKey(n.GetName())
+		s.WriteKey(n.Name())
 	} else {
 		return errors.New("nil provided instead schema")
 	}
