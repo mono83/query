@@ -1,6 +1,9 @@
 package rules
 
-import "github.com/mono83/query"
+import (
+	"github.com/mono83/query"
+	"github.com/mono83/query/match"
+)
 
 // WithRight constructs new rule with requested right value.
 func WithRight(r query.Rule, v interface{}) query.Rule {
@@ -18,4 +21,13 @@ func WithLeft(r query.Rule, v interface{}) query.Rule {
 	}
 
 	return New(v, r.Type(), r.Right())
+}
+
+// WithLeft constructs new rule with requested type.
+func WithType(r query.Rule, o match.Type) query.Rule {
+	if r == nil || r.Type() == o {
+		return r
+	}
+
+	return New(r.Left(), o, r.Right())
 }
