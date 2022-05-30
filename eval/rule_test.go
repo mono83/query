@@ -34,8 +34,13 @@ var testEvalRuleDataProvider = []struct {
 	{false, true, rules.New(42, match.Eq, float64(42))},
 	{true, true, rules.New("foo", match.Neq, "bar")},
 
-	{true, true, rules.New(31, match.Gt, 2)},
+	{true, true, rules.New(33, match.Gt, 1)},
+	{false, false, rules.New(4, match.Gt, 4)},
 	{false, true, rules.New(31, match.Gt, -2.)},
+
+	{true, true, rules.New(31, match.Gte, 2)},
+	{true, true, rules.New(4, match.Gte, 4)},
+	{false, true, rules.New(31, match.Gte, -2.)},
 }
 
 func TestEvaluator_Rule(t *testing.T) {

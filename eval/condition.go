@@ -48,9 +48,5 @@ func (e Evaluator) Condition(c query.Condition) bool {
 		}
 	}
 
-	if logic == query.Or {
-		return false
-	}
-
-	return true
+	return logic != query.Or
 }
