@@ -8,9 +8,9 @@ func (e Evaluator) Condition(c query.Condition) bool {
 		return false
 	}
 
-	logic := c.GetType()
-	rules := c.GetRules()
-	conditions := c.GetConditions()
+	logic := c.Type()
+	rules := c.Rules()
+	conditions := c.Conditions()
 
 	if len(rules) == 0 && len(conditions) == 0 {
 		return true

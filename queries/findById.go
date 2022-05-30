@@ -19,11 +19,11 @@ type id64SimpleQuery struct {
 	ids   []int64
 }
 
-func (id64SimpleQuery) GetType() query.Logic             { return query.And }
-func (id64SimpleQuery) GetColumns() []query.Named        { return nil }
-func (id64SimpleQuery) GetConditions() []query.Condition { return nil }
-func (id64SimpleQuery) GetSorting() []query.Sorting      { return nil }
-func (id64SimpleQuery) GetLimit() int                    { return 0 }
-func (id64SimpleQuery) GetOffset() int                   { return 0 }
-func (i id64SimpleQuery) GetSchema() query.Named         { return names.String(i.table) }
-func (i id64SimpleQuery) GetRules() []query.Rule         { return []query.Rule{rules.MatchID64(i.ids...)} }
+func (id64SimpleQuery) Type() query.Logic             { return query.And }
+func (id64SimpleQuery) Columns() []query.Named        { return nil }
+func (id64SimpleQuery) Conditions() []query.Condition { return nil }
+func (id64SimpleQuery) Sorting() []query.Sorting      { return nil }
+func (id64SimpleQuery) Limit() int                    { return 0 }
+func (id64SimpleQuery) Offset() int                   { return 0 }
+func (i id64SimpleQuery) Schema() query.Named         { return names.String(i.table) }
+func (i id64SimpleQuery) Rules() []query.Rule         { return []query.Rule{rules.MatchID64(i.ids...)} }

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/mono83/query"
+	"github.com/mono83/query/filters"
 	"github.com/mono83/query/names"
 	"github.com/mono83/query/rules"
 	"github.com/mono83/query/sorting"
@@ -16,36 +17,44 @@ var filterToSQLDataProvider = []struct {
 	Filter query.Filter
 }{
 	// No sorting
-	{"`id` NOT IS NULL", query.CommonFilter{Type: query.And, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
-	{"`id` NOT IS NULL LIMIT 5", query.CommonFilter{Type: query.And, Limit: 5, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
-	{"`id` NOT IS NULL", query.CommonFilter{Type: query.And, Offset: 5, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
-	{"`id` NOT IS NULL LIMIT 5,2", query.CommonFilter{Type: query.And, Offset: 5, Limit: 2, Rules: []query.Rule{rules.IsNotNull(names.String("id"))}}},
+	{"`id` NOT IS NULL", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 0, 0)},
+	{"`id` NOT IS NULL LIMIT 5", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 5, 0)},
+	{"`id` NOT IS NULL", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 0, 5)},
+	{"`id` NOT IS NULL LIMIT 5,2", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 2, 5)},
 
 	// With sorting
 	{
 		"`id` NOT IS NULL ORDER BY `id` ASC",
-		query.CommonFilter{
-			Type:    query.And,
-			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
-			Sorting: []query.Sorting{sorting.Asc("id")},
-		},
+		filters.New(
+			query.And,
+			[]query.Rule{rules.IsNotNull(names.String("id"))},
+			nil,
+			[]query.Sorting{sorting.Asc("id")},
+			0,
+			0,
+		),
 	},
 	{
 		"`id` NOT IS NULL ORDER BY `id` ASC,`name` DESC",
-		query.CommonFilter{
-			Type:    query.And,
-			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
-			Sorting: []query.Sorting{sorting.Asc("id"), sorting.Desc("name")},
-		},
+		filters.New(
+			query.And,
+			[]query.Rule{rules.IsNotNull(names.String("id"))},
+			nil,
+			[]query.Sorting{sorting.Asc("id"), sorting.Desc("name")},
+			0,
+			0,
+		),
 	},
 	{
 		"`id` NOT IS NULL ORDER BY `id` ASC LIMIT 3",
-		query.CommonFilter{
-			Type:    query.And,
-			Rules:   []query.Rule{rules.IsNotNull(names.String("id"))},
-			Sorting: []query.Sorting{sorting.Asc("id")},
-			Limit:   3,
-		},
+		filters.New(
+			query.And,
+			[]query.Rule{rules.IsNotNull(names.String("id"))},
+			nil,
+			[]query.Sorting{sorting.Asc("id")},
+			3,
+			0,
+		),
 	},
 }
 

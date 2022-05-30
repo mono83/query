@@ -13,11 +13,11 @@ func mapCondition(src query.Condition) condition {
 		return x
 	}
 
-	c := condition{t: src.GetType()}
-	for _, x := range src.GetRules() {
+	c := condition{t: src.Type()}
+	for _, x := range src.Rules() {
 		c.r = append(c.r, mapRule(x))
 	}
-	for _, x := range src.GetConditions() {
+	for _, x := range src.Conditions() {
 		c.c = append(c.c, mapCondition(x))
 	}
 	return c
@@ -29,8 +29,8 @@ type condition struct {
 	c []condition
 }
 
-func (c condition) GetType() query.Logic { return c.t }
-func (c condition) GetRules() []query.Rule {
+func (c condition) Type() query.Logic { return c.t }
+func (c condition) Rules() []query.Rule {
 	l := len(c.r)
 	if l == 0 {
 		return nil
@@ -42,7 +42,7 @@ func (c condition) GetRules() []query.Rule {
 	}
 	return res
 }
-func (c condition) GetConditions() []query.Condition {
+func (c condition) Conditions() []query.Condition {
 	l := len(c.c)
 	if l == 0 {
 		return nil

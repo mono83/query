@@ -13,11 +13,11 @@ func (s *StatementBuilder) WriteFilter(f query.Filter) error {
 		return err
 	}
 
-	if len(f.GetSorting()) > 0 {
+	if len(f.Sorting()) > 0 {
 		// Applying sorting
 		s.buf.WriteString(" ORDER BY ")
 
-		for i, sort := range f.GetSorting() {
+		for i, sort := range f.Sorting() {
 			if i > 0 {
 				s.buf.WriteRune(',')
 			}
@@ -33,10 +33,10 @@ func (s *StatementBuilder) WriteFilter(f query.Filter) error {
 		}
 	}
 
-	if lim := f.GetLimit(); lim > 0 {
+	if lim := f.Limit(); lim > 0 {
 		// Applying limit
 		s.buf.WriteString(" LIMIT ")
-		if off := f.GetOffset(); off > 0 {
+		if off := f.Offset(); off > 0 {
 			s.buf.WriteString(strconv.Itoa(off))
 			s.buf.WriteRune(',')
 		}

@@ -4,7 +4,7 @@ package query
 type Filter interface {
 	Condition
 
-	GetSorting() []Sorting
-	GetLimit() int
-	GetOffset() int
+	Sorting() []Sorting
+	Limit() int
+	Offset() int
 }

@@ -27,10 +27,10 @@ func (s *StatementBuilder) WriteQuery(q query.Query) error {
 	s.buf.WriteString("SELECT ")
 
 	// Writing columns
-	if len(q.GetColumns()) == 0 {
+	if len(q.Columns()) == 0 {
 		s.buf.WriteString("*")
 	} else {
-		for i, c := range q.GetColumns() {
+		for i, c := range q.Columns() {
 			if i > 0 {
 				s.buf.WriteString(", ")
 			}
@@ -42,12 +42,12 @@ func (s *StatementBuilder) WriteQuery(q query.Query) error {
 
 	// Writing FROM
 	s.buf.WriteString(" FROM ")
-	if err := s.WriteSchema(q.GetSchema()); err != nil {
+	if err := s.WriteSchema(q.Schema()); err != nil {
 		return err
 	}
 
 	// Writing filter
-	if len(q.GetConditions()) != 0 || len(q.GetRules()) != 0 {
+	if len(q.Conditions()) != 0 || len(q.Rules()) != 0 {
 		s.buf.WriteString(" WHERE ")
 	}
 	return s.WriteFilter(q)
