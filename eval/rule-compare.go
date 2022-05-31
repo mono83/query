@@ -1,7 +1,6 @@
 package eval
 
 import (
-	"fmt"
 	"reflect"
 
 	"github.com/mono83/query/match"
@@ -52,7 +51,6 @@ func (e Evaluator) compFloat64(left, right float64, op match.Type) bool {
 }
 
 func (e Evaluator) compInt64(left, right int64, op match.Type) bool {
-	fmt.Println("XXX", left, right, op)
 	switch op {
 	case match.GreaterThan:
 		return left > right
