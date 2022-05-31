@@ -5,7 +5,7 @@ type Aliased interface {
 	Alias() string
 }
 
-// Aliased defines pair of alias and original name
+// AliasedName defines pair of alias and original name
 type AliasedName interface {
 	Aliased
 	Named
