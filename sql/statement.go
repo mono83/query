@@ -1,28 +1,30 @@
 package sql
 
-// Statement is an interface to SQL with placeholders
+// Statement is an interface to SQL with placeholders.
 type Statement interface {
-	GetSQL() string
-	GetPlaceholders() []interface{}
+	Query() string
+	Args() []interface{}
 }
 
-// CommonStatement is Statement interface implementation
-type CommonStatement struct {
-	SQL          string
-	Placeholders []interface{}
+// NewStatement constructs new statement for given query
+// and arguments.
+func NewStatement(query string, args ...interface{}) Statement {
+	if len(args) == 0 {
+		return stringStatement(query)
+	}
+
+	return statement{query: query, args: args}
 }
 
-// GetSQL is Statement interface implementation
-func (c CommonStatement) GetSQL() string { return c.SQL }
+type statement struct {
+	query string
+	args  []interface{}
+}
 
-// GetPlaceholders is Statement interface implementation
-func (c CommonStatement) GetPlaceholders() []interface{} { return c.Placeholders }
+func (s statement) Query() string       { return s.query }
+func (s statement) Args() []interface{} { return s.args }
 
-// StringStatement is implementation of statement interface without placeholders
-type StringStatement string
+type stringStatement string
 
-// GetSQL is Statement interface implementation
-func (s StringStatement) GetSQL() string { return string(s) }
-
-// GetPlaceholders is Statement interface implementation
-func (s StringStatement) GetPlaceholders() []interface{} { return nil }
+func (s stringStatement) Query() string       { return string(s) }
+func (s stringStatement) Args() []interface{} { return nil }

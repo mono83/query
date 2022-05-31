@@ -60,9 +60,9 @@ func TestConditionToSQL(t *testing.T) {
 			b := NewStatementBuilder()
 			if assert.NoError(t, b.WriteCondition(d.Condition)) {
 				stmt := b.Build()
-				if assert.Equal(t, d.SQL, stmt.GetSQL()) {
-					if assert.Equal(t, len(d.Placeholders), len(stmt.GetPlaceholders()), "parameters count don't match") {
-						for i, a := range stmt.GetPlaceholders() {
+				if assert.Equal(t, d.SQL, stmt.Query()) {
+					if assert.Equal(t, len(d.Placeholders), len(stmt.Args()), "parameters count don't match") {
+						for i, a := range stmt.Args() {
 							assert.Equal(t, d.Placeholders[i], a)
 						}
 					}

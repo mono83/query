@@ -64,7 +64,7 @@ func TestFilterToSQL(t *testing.T) {
 			b := NewStatementBuilder()
 			if assert.NoError(t, b.WriteFilter(d.Filter)) {
 				stmt := b.Build()
-				assert.Equal(t, d.SQL, stmt.GetSQL())
+				assert.Equal(t, d.SQL, stmt.Query())
 			}
 		})
 	}

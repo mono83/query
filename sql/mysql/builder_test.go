@@ -20,7 +20,7 @@ var keysDataProvider = []struct {
 func TestWriteKey(t *testing.T) {
 	for _, d := range keysDataProvider {
 		t.Run(d.Provided, func(t *testing.T) {
-			assert.Equal(t, d.Expected, NewStatementBuilder().WriteKey(d.Provided).Build().GetSQL())
+			assert.Equal(t, d.Expected, NewStatementBuilder().WriteKey(d.Provided).Build().Query())
 		})
 	}
 }
@@ -43,17 +43,17 @@ func TestWriteNameds(t *testing.T) {
 		t.Run(d.ExpectedColumn, func(t *testing.T) {
 			b = NewStatementBuilder()
 			if assert.NoError(t, b.WriteColumn(d.Source)) {
-				assert.Equal(t, d.ExpectedColumn, b.Build().GetSQL())
+				assert.Equal(t, d.ExpectedColumn, b.Build().Query())
 			}
 
 			b = NewStatementBuilder()
 			if assert.NoError(t, b.WriteSchema(d.Source)) {
-				assert.Equal(t, d.ExpectedSchema, b.Build().GetSQL())
+				assert.Equal(t, d.ExpectedSchema, b.Build().Query())
 			}
 
 			b = NewStatementBuilder()
 			b.WriteNamed(d.Source)
-			assert.Equal(t, d.ExpectedSorting, b.Build().GetSQL())
+			assert.Equal(t, d.ExpectedSorting, b.Build().Query())
 		})
 	}
 }

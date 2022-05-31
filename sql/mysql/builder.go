@@ -22,14 +22,7 @@ func NewStatementBuilder() *StatementBuilder {
 
 // Build returns statement
 func (s *StatementBuilder) Build() sql.Statement {
-	if len(s.placeholders) == 0 {
-		return sql.StringStatement(s.buf.String())
-	}
-
-	return sql.CommonStatement{
-		SQL:          s.buf.String(),
-		Placeholders: s.placeholders,
-	}
+	return sql.NewStatement(s.buf.String(), s.placeholders...)
 }
 
 // WriteKey writes table or column name
