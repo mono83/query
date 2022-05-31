@@ -11,6 +11,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestAllMatchOperators(t *testing.T) {
+	if supported, all := 10, match.Count(); supported != all {
+		t.Errorf("Seems like not every of %d match operators are supported by eval, that handles %d", all, supported)
+	}
+}
+
 var ruleToSQLDataProvider = []struct {
 	SQL          string
 	Placeholders []interface{}

@@ -10,6 +10,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestAllMatchOperators(t *testing.T) {
+	if supported, all := 10, match.Count(); supported != all {
+		t.Errorf("Seems like not every of %d match operators are supported by eval, that handles %d", all, supported)
+	}
+}
+
 var testEvalRuleDataProvider = []struct {
 	Strict, NonStrict bool
 	Rule              query.Rule
@@ -41,6 +47,14 @@ var testEvalRuleDataProvider = []struct {
 	{true, true, rules.New(31, match.Gte, 2)},
 	{true, true, rules.New(4, match.Gte, 4)},
 	{false, true, rules.New(31, match.Gte, -2.)},
+
+	{true, true, rules.New(4, match.Lt, 18)},
+	{false, false, rules.New(-2, match.Lt, -2)},
+	{false, true, rules.New(3, match.Lt, 18.)},
+
+	{true, true, rules.New(-1, match.Lte, 1)},
+	{true, true, rules.New(9, match.Lte, 9)},
+	{false, true, rules.New(1, match.Lte, 2.)},
 }
 
 func TestEvaluator_Rule(t *testing.T) {

@@ -70,6 +70,9 @@ var (
 	upper byte = 10
 )
 
+// Count return total count of match operators
+func Count() int { return int(upper - lower + 1) }
+
 // All returns full list of rule operations, except Unknown
 // Used in tests primarily
 func All() []Type {
