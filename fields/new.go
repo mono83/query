@@ -27,3 +27,16 @@ type field struct {
 func (f field) Name() string     { return f.name }
 func (f field) Sortable() bool   { return f.sort }
 func (f field) Filterable() bool { return f.filter }
+
+func (f field) String() string {
+	if f.sort && f.filter {
+		return `{"` + f.name + `",filter,sort}`
+	}
+	if !f.sort && !f.filter {
+		return `{"` + f.name + `",nofilter,nosort}`
+	}
+	if f.sort {
+		return `{"` + f.name + `",nofilter,sort}`
+	}
+	return `{"` + f.name + `",filter,nosort}`
+}
