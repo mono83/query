@@ -10,6 +10,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestAllMatchOperators(t *testing.T) {
+	if supported, all := 10, match.Count(); supported != all {
+		t.Errorf("Seems like not every of %d match operators are supported by eval, that handles %d", all, supported)
+	}
+}
+
 var testEvalRuleDataProvider = []struct {
 	Strict, NonStrict bool
 	Rule              query.Rule
@@ -41,6 +47,22 @@ var testEvalRuleDataProvider = []struct {
 	{true, true, rules.New(31, match.Gte, 2)},
 	{true, true, rules.New(4, match.Gte, 4)},
 	{false, true, rules.New(31, match.Gte, -2.)},
+
+	{true, true, rules.New(4, match.Lt, 18)},
+	{false, false, rules.New(-2, match.Lt, -2)},
+	{false, true, rules.New(3, match.Lt, 18.)},
+
+	{true, true, rules.New(-1, match.Lte, 1)},
+	{true, true, rules.New(9, match.Lte, 9)},
+	{false, true, rules.New(1, match.Lte, 2.)},
+
+	{true, true, rules.New(4, match.In, []int{2, 3, 4})},
+	{true, true, rules.New(4, match.In, []interface{}{2, 3, 4})},
+	{false, true, rules.New(4, match.In, []interface{}{2, 3, 4.})},
+	{false, false, rules.New(4, match.In, []int{2, 3})},
+
+	{true, true, rules.New(4, match.NotIn, []int{1, 2, 3})},
+	{false, false, rules.New(4, match.NotIn, []int{1, 2, 3, 4})},
 }
 
 func TestEvaluator_Rule(t *testing.T) {
@@ -49,14 +71,14 @@ func TestEvaluator_Rule(t *testing.T) {
 	for _, data := range testEvalRuleDataProvider {
 		t.Run(fmt.Sprintf("%v -> %v / %v", data.Rule, data.Strict, data.NonStrict), func(t *testing.T) {
 			if data.Strict {
-				assert.True(t, strict.Rule(data.Rule))
+				assert.True(t, strict.Rule(data.Rule), "rule %s must be true in strict mode", data.Rule)
 			} else {
-				assert.False(t, strict.Rule(data.Rule))
+				assert.False(t, strict.Rule(data.Rule), "rule %s must be false in strict mode", data.Rule)
 			}
 			if data.NonStrict {
-				assert.True(t, nonstrict.Rule(data.Rule))
+				assert.True(t, nonstrict.Rule(data.Rule), "rule %s must be true in strict mode", data.Rule)
 			} else {
-				assert.False(t, nonstrict.Rule(data.Rule))
+				assert.False(t, nonstrict.Rule(data.Rule), "rule %s must be false in strict mode", data.Rule)
 			}
 		})
 	}
