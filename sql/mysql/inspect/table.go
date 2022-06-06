@@ -7,6 +7,14 @@ import (
 	"github.com/mono83/query/fields"
 )
 
+type virtualColumnType struct {
+	dataType string
+	nullable bool
+}
+
+func (v virtualColumnType) DatabaseTypeName() string { return v.dataType }
+func (v virtualColumnType) Nullable() (bool, bool)   { return v.nullable, true }
+
 // TableFields analyzes table structure and returns slice of
 // sortable/filterable fields.
 func TableFields(db *sql.DB, database, table string) ([]query.Field, error) {
@@ -15,7 +23,7 @@ func TableFields(db *sql.DB, database, table string) ([]query.Field, error) {
 	}
 
 	rows, err := db.Query(
-		"SELECT `COLUMN_NAME`, `DATA_TYPE`, `COLUMN_KEY` FROM `information_schema`.`COLUMNS` WHERE `TABLE_SCHEMA`=? AND `TABLE_NAME`=?",
+		"SELECT `COLUMN_NAME`, `DATA_TYPE`, `COLUMN_KEY`, `IS_NULLABLE` FROM `information_schema`.`COLUMNS` WHERE `TABLE_SCHEMA`=? AND `TABLE_NAME`=?",
 		database, table,
 	)
 	if err != nil {
@@ -24,18 +32,24 @@ func TableFields(db *sql.DB, database, table string) ([]query.Field, error) {
 	defer rows.Close()
 
 	var out []query.Field
-	var columnName, columnDataType, columnKey string
+	var columnName, columnDataType, columnKey, isNull string
 	for rows.Next() {
-		if err := rows.Scan(&columnName, &columnDataType, &columnKey); err != nil {
+		if err := rows.Scan(&columnName, &columnDataType, &columnKey, &isNull); err != nil {
 			return nil, err
 		}
 
 		if notIgnored(columnDataType) {
+			// Data type
+			dt := virtualColumnType{
+				dataType: columnDataType,
+				nullable: isNull == "YES",
+			}
+
 			// Constructing field
 			if len(columnKey) > 0 {
-				out = append(out, fields.New(columnName, true, isSortable(columnDataType)))
+				out = append(out, fields.New(columnName, true, isSortable(columnDataType), dt))
 			} else {
-				out = append(out, fields.New(columnName, false, false))
+				out = append(out, fields.New(columnName, false, false, dt))
 			}
 		}
 	}

@@ -25,7 +25,7 @@ var testVerifyData = []struct {
 	},
 	{
 		Error:   `field "id" does not support sorting`,
-		Sorting: []query.Sorting{sorting.Field(New("id", true, false), query.Asc)},
+		Sorting: []query.Sorting{sorting.Field(Untyped("id", true, false), query.Asc)},
 	},
 	{
 		Error:   `no field found in sorting by "id"`,
@@ -35,13 +35,13 @@ var testVerifyData = []struct {
 		Error: ``,
 		Rules: []query.Rule{
 			rules.Eq(Indexed("id"), 10),
-			rules.IsNull(New("nextAt", true, false)),
+			rules.IsNull(Untyped("nextAt", true, false)),
 		},
 	},
 	{
 		Error: `field "nextAt" used in {Rule {{"nextAt",nofilter,sort} (fields.field)} Is_Null}} does not support filtering`,
 		Rules: []query.Rule{
-			rules.IsNull(New("nextAt", false, true)),
+			rules.IsNull(Untyped("nextAt", false, true)),
 		},
 	},
 	{
