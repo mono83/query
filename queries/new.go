@@ -16,6 +16,11 @@ func New(columns []query.Named, schema query.Named, logic query.Logic, rules []q
 	}
 }
 
+// All constructs query with given criteria which returns all columns.
+func All(schema query.Named, logic query.Logic, rules []query.Rule, conditions []query.Condition, sorting []query.Sorting, limit, offset int) query.Query {
+	return New(nil, schema, logic, rules, conditions, sorting, limit, offset)
+}
+
 type impl struct {
 	logic      query.Logic
 	rules      []query.Rule
