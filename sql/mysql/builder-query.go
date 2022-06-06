@@ -4,18 +4,7 @@ import (
 	"errors"
 
 	"github.com/mono83/query"
-	"github.com/mono83/query/sql"
 )
-
-// QueryToStatement builds sql.Statement for provided query.Query
-func QueryToStatement(q query.Query) (sql.Statement, error) {
-	b := NewStatementBuilder()
-	if err := b.WriteQuery(q); err != nil {
-		return nil, err
-	}
-
-	return b.Build(), nil
-}
 
 // WriteQuery writes whole query into statement builder
 func (s *StatementBuilder) WriteQuery(q query.Query) error {
