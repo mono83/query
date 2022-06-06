@@ -56,7 +56,7 @@ var conditionToSQLDataProvider = []struct {
 
 func TestConditionToSQL(t *testing.T) {
 	for _, d := range conditionToSQLDataProvider {
-		t.Run(fmt.Sprintf("%v", d.Condition), func(t *testing.T) {
+		t.Run(fmt.Sprint(d.Condition), func(t *testing.T) {
 			b := NewStatementBuilder()
 			if assert.NoError(t, b.WriteCondition(d.Condition)) {
 				stmt := b.Build()

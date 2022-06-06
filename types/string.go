@@ -1,8 +1,19 @@
 package types
 
 import (
+	"fmt"
 	"strings"
 )
+
+// ToString converts given any to string
+func ToString(v interface{}) string {
+	if v == nil {
+		return ""
+	} else if s, ok := v.(string); ok {
+		return s
+	}
+	return fmt.Sprint(v)
+}
 
 // IsString returns true if underlying given data type
 // can hold or produce string values.

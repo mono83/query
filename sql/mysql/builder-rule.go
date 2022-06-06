@@ -2,10 +2,10 @@ package mysql
 
 import (
 	"errors"
-	"fmt"
 	"github.com/mono83/query"
 	"github.com/mono83/query/match"
 	"github.com/mono83/query/rules"
+	"github.com/mono83/query/types"
 )
 
 // WriteRule writes rule into builder
@@ -85,7 +85,7 @@ func (s *StatementBuilder) ruleToSQLSimpleOps(left, right interface{}, t match.T
 		s.buf.WriteString(" <=")
 	case match.Contains:
 		s.buf.WriteString(" LIKE ?")
-		s.placeholders = append(s.placeholders, "%"+fmt.Sprint(right)+"%")
+		s.placeholders = append(s.placeholders, "%"+types.ToString(right)+"%")
 		return nil
 	default:
 		return UnsupportedOperation(t)

@@ -1,7 +1,7 @@
 package eval
 
 import (
-	"fmt"
+	"github.com/mono83/query/types"
 	"strings"
 )
 
@@ -16,10 +16,10 @@ func (e Evaluator) contains(left, right interface{}) bool {
 		return false
 	}
 	if !okleft {
-		sleft = fmt.Sprint(left)
+		sleft = types.ToString(left)
 	}
 	if !okright {
-		sright = fmt.Sprint(right)
+		sright = types.ToString(right)
 	}
 
 	return strings.Contains(sleft, sright)

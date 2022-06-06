@@ -1,7 +1,7 @@
 package conditions
 
 import (
-	"fmt"
+	"github.com/mono83/query/types"
 	"testing"
 
 	"github.com/mono83/query"
@@ -31,7 +31,7 @@ func TestMap(t *testing.T) {
 		if r.Left() == "bar" {
 			return nil
 		}
-		return rules.WithRight(r, "x"+fmt.Sprint(r.Right()))
+		return rules.WithRight(r, "x"+types.ToString(r.Right()))
 	})
 
 	assert.Len(t, c.Rules(), 2)

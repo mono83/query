@@ -60,7 +60,7 @@ var filterToSQLDataProvider = []struct {
 
 func TestFilterToSQL(t *testing.T) {
 	for _, d := range filterToSQLDataProvider {
-		t.Run(fmt.Sprintf("%v", d.Filter), func(t *testing.T) {
+		t.Run(fmt.Sprint(d.Filter), func(t *testing.T) {
 			b := NewStatementBuilder()
 			if assert.NoError(t, b.WriteFilter(d.Filter)) {
 				stmt := b.Build()

@@ -43,7 +43,7 @@ var ruleToSQLDataProvider = []struct {
 
 func TestRuleToSQL(t *testing.T) {
 	for _, d := range ruleToSQLDataProvider {
-		t.Run(fmt.Sprintf("%v", d.Rule), func(t *testing.T) {
+		t.Run(fmt.Sprint(d.Rule), func(t *testing.T) {
 			b := NewStatementBuilder()
 			if assert.NoError(t, b.WriteRule(d.Rule)) {
 				stmt := b.Build()
@@ -84,7 +84,7 @@ var ruleToSQLErrorsDataProvder = []struct {
 
 func TestRuleToSQLErrors(t *testing.T) {
 	for _, d := range ruleToSQLErrorsDataProvder {
-		t.Run(fmt.Sprintf("%v", d.Rule), func(t *testing.T) {
+		t.Run(fmt.Sprint(d.Rule), func(t *testing.T) {
 			err := NewStatementBuilder().WriteRule(d.Rule)
 			if err == nil {
 				t.Errorf(`expected error "%s" but got nothing`, d.Error)

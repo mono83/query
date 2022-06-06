@@ -1,6 +1,8 @@
 package eval
 
-import "fmt"
+import (
+	"github.com/mono83/query/types"
+)
 
 func (e Evaluator) equals(left, right interface{}) bool {
 	if left == right {
@@ -11,5 +13,5 @@ func (e Evaluator) equals(left, right interface{}) bool {
 		return false
 	}
 
-	return fmt.Sprint(left) == fmt.Sprint(right)
+	return types.ToString(left) == types.ToString(right)
 }
