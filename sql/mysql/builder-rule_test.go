@@ -12,7 +12,7 @@ import (
 )
 
 func TestAllMatchOperators(t *testing.T) {
-	if supported, all := 10, match.Count(); supported != all {
+	if supported, all := 11, match.Count(); supported != all {
 		t.Errorf("Seems like not every of %d match operators are supported by eval, that handles %d", all, supported)
 	}
 }
@@ -38,6 +38,7 @@ var ruleToSQLDataProvider = []struct {
 	{"`bar` IN (?,?,?)", []interface{}{5, int64(6), 7}, rules.New(names.String("bar"), match.In, []interface{}{5, int64(6), 7})},
 	{"`bar` NOT IN (?,?)", []interface{}{3, "false"}, rules.New(names.String("bar"), match.NotIn, []interface{}{3, "false"})},
 	{"`bar` IN (?)", []interface{}{true}, rules.New(names.String("bar"), match.In, []interface{}{true})},
+	{"`foo` LIKE ?", []interface{}{"%bar%"}, rules.New(names.String("foo"), match.Contains, "bar")},
 }
 
 func TestRuleToSQL(t *testing.T) {

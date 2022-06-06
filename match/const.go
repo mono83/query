@@ -34,6 +34,9 @@ const (
 	Lt                Type = 10 // Alias
 	LesserThan        Type = 10 // Alias
 	LowerThan         Type = 10
+
+	Contains Type = 11
+	Like     Type = 11 // Alias
 )
 
 func (t Type) String() string {
@@ -67,7 +70,7 @@ func (t Type) Names() []string {
 // matcher type constants
 var (
 	lower byte = 1
-	upper byte = 10
+	upper byte = 11
 )
 
 // Count return total count of match operators

@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"errors"
-
+	"fmt"
 	"github.com/mono83/query"
 	"github.com/mono83/query/match"
 	"github.com/mono83/query/rules"
@@ -29,6 +29,7 @@ func (s *StatementBuilder) WriteRule(rule query.Rule) error {
 	case match.IsNull, match.NotIsNull:
 		return s.ruleToSQLNulls(left, rule.Type())
 	case match.Equals,
+		match.Contains,
 		match.NotEquals,
 		match.GreaterThan,
 		match.LowerThan,
@@ -82,6 +83,10 @@ func (s *StatementBuilder) ruleToSQLSimpleOps(left, right interface{}, t match.T
 		s.buf.WriteString(" <")
 	case match.LowerThanEquals:
 		s.buf.WriteString(" <=")
+	case match.Contains:
+		s.buf.WriteString(" LIKE ?")
+		s.placeholders = append(s.placeholders, "%"+fmt.Sprint(right)+"%")
+		return nil
 	default:
 		return UnsupportedOperation(t)
 	}

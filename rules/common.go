@@ -20,6 +20,9 @@ func Eq(left, right interface{}) query.Rule {
 	return New(left, match.Equals, right)
 }
 
+// Contains returns rule built with CONTAINS matcher
+func Contains(left interface{}, right string) query.Rule { return New(left, match.Contains, right) }
+
 // MatchID64 returns rule for matching IDs
 func MatchID64(id ...int64) query.Rule {
 	switch len(id) {

@@ -34,6 +34,8 @@ func (e Evaluator) Rule(r query.Rule) bool {
 		return !e.in(left, right)
 	case match.GreaterThan, match.GreaterThanEquals, match.LesserThan, match.LesserThanEquals:
 		return e.comp(left, right, op)
+	case match.Contains:
+		return e.contains(left, right)
 	}
 
 	return false
