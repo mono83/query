@@ -21,6 +21,9 @@ var filterToSQLDataProvider = []struct {
 	{"`id` NOT IS NULL LIMIT 5", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 5, 0)},
 	{"`id` NOT IS NULL", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 0, 5)},
 	{"`id` NOT IS NULL LIMIT 5,2", filters.New(query.And, []query.Rule{rules.IsNotNull(names.String("id"))}, nil, nil, 2, 5)},
+	{" LIMIT 5", filters.New(query.And, nil, nil, nil, 5, 0)},
+	{" ORDER BY `id` DESC LIMIT 5", filters.New(query.And, nil, nil, []query.Sorting{sorting.Desc("id")}, 5, 0)},
+	{" ORDER BY `id` DESC", filters.New(query.And, nil, nil, []query.Sorting{sorting.Desc("id")}, 0, 0)},
 
 	// With sorting
 	{

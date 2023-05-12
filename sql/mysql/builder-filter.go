@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"errors"
+	"github.com/mono83/query/conditions"
 	"strconv"
 
 	"github.com/mono83/query"
@@ -9,8 +10,10 @@ import (
 
 // WriteFilter converts filter into SQL and writes it into buffer
 func (s *StatementBuilder) WriteFilter(f query.Filter) error {
-	if err := s.WriteCondition(f); err != nil {
-		return err
+	if !conditions.IsEmpty(f) {
+		if err := s.WriteCondition(f); err != nil {
+			return err
+		}
 	}
 
 	if len(f.Sorting()) > 0 {
